@@ -1,4 +1,4 @@
-//QUEUE USING ARRAY
+//IMPLEMENT QUEUE USING ARRAY
 #include<stdio.h>
 #include<stdlib.h>
 int a[10],front=-1,rear=-1,n;

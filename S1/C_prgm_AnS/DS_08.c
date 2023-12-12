@@ -1,4 +1,4 @@
-//Disjoint set.
+//Disjoint sets and the associated operations(create,union,find)
 #include<stdio.h>
 #include<stdlib.h>
 struct node {

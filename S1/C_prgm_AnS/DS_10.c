@@ -1,4 +1,4 @@
-//STACK USING ARRAY
+//IMPLEMENT STACK USING ARRAY
 #include<stdio.h>
 #include<stdlib.h>
 int a[10],top=-1,n;
