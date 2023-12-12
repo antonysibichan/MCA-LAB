@@ -1,3 +1,4 @@
+//Stack using singly linked list-push,pop,linear search,display.
 #include<stdio.h>
 #include<stdlib.h>
  struct node

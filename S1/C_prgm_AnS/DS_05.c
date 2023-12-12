@@ -1,4 +1,5 @@
- #include <stdio.h>
+//Implement all the opertaions of doubly linked list.
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 struct node {

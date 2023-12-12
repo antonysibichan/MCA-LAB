@@ -1,3 +1,4 @@
+//Binary search tree-Insertion,Deletion,Search and Traversal.
 #include<stdio.h>
 #include<stdlib.h>
 struct node{
