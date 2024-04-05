@@ -1,0 +1,93 @@
+mysql> use Antony_db;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+
+mysql> create table employees(
+    -> employee_id int primary key,
+    -> first_name varchar(50),
+    -> last_name varchar(50),
+    -> salary decimal(10,2)
+    -> );
+Query OK, 0 rows affected (0.42 sec)
+
+mysql> create table audit_log(
+    -> log_id int primary key auto_increment,
+    -> action varchar(255),
+    -> timestamp timestamp default current_timestamp
+    -> );
+Query OK, 0 rows affected (0.38 sec)
+
+mysql> insert into employees(employee_id,first_name,last_name,salary)
+    -> values
+    -> (1,'john','Doe',50000.00),
+    -> (2,'Jane','Smith',60000.00),
+    -> (3,'Micheal','Johnson',55000.00),
+    -> (4,'Harry','Kane',55000.00);
+Query OK, 4 rows affected (0.14 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO audit_log (action, timestamp)
+    -> VALUES
+    -> ('New employees added', CURRENT_TIMESTAMP);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from employees;
++-------------+------------+-----------+----------+
+| employee_id | first_name | last_name | salary   |
++-------------+------------+-----------+----------+
+|           1 | john       | Doe       | 50000.00 |
+|           2 | Jane       | Smith     | 60000.00 |
+|           3 | Micheal    | Johnson   | 55000.00 |
+|           4 | Harry      | Kane      | 55000.00 |
++-------------+------------+-----------+----------+
+4 rows in set (0.02 sec)
+
+mysql> select * from audit_log;
++--------+---------------------+---------------------+
+| log_id | action              | timestamp           |
++--------+---------------------+---------------------+
+|      1 | New employees added | 2024-03-26 14:13:26 |
++--------+---------------------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> delimiter //
+mysql> create trigger after_employee_insert
+    -> after insert on employees
+    -> for each row
+    -> begin
+    -> insert into audit_log(action,timestamp)
+    -> values('new employee inserted',now());
+    -> end //
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> delimiter ;
+mysql> insert into employees(employee_id,first_name,last_name,salary)
+    -> values(5,'Minnu','Joseph',65000.00);
+
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from employees;
++-------------+------------+-----------+----------+
+| employee_id | first_name | last_name | salary   |
++-------------+------------+-----------+----------+
+|           1 | john       | Doe       | 50000.00 |
+|           2 | Jane       | Smith     | 60000.00 |
+|           3 | Micheal    | Johnson   | 55000.00 |
+|           4 | Harry      | Kane      | 55000.00 |
+|           5 | Minnu      | Joseph    | 65000.00 |
++-------------+------------+-----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from audit_log;
++--------+-----------------------+---------------------+
+| log_id | action                | timestamp           |
++--------+-----------------------+---------------------+
+|      1 | New employees added   | 2024-03-26 14:13:26 |
+|      2 | new employee inserted | 2024-03-26 14:23:13 |
++--------+-----------------------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> 
+

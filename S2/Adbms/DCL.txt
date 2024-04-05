@@ -1,0 +1,191 @@
+lab2@lab2-OptiPlex-380:~/Desktop/AntonyS2$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use Antonydb;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+
+
+
+mysql> create table tbl_emp(emp_id int(30) primary key,emp_name varchar(30) not null,emp_add varchar(30) not null,emp_phone varchar(30) not null,dept_id varchar(30) not
+null,dept_name varchar(30) not null,salary varchar(30) not null);
+Query OK, 0 rows affected (0.25 sec)
+
+
+mysql> insert into tbl_emp values(1,'Ramesh','GNoida','0987654321',0056,'sales','60000');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into tbl_emp values(2,'Suresh','GNoida','0987654322',0072,'sales','75000');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into tbl_emp values(3,'Rajesh','GNoida','0987654323',2324,'sales','28000');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into tbl_emp values(4,'Shyam','BSB','0987654324',8883,'sales','35000');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into tbl_emp values(5,'Ramu','BSB','0987654325',74568,'sales','96000');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from tbl_emp;
++--------+----------+---------+------------+---------+-----------+--------+
+| emp_id | emp_name | emp_add | emp_phone  | dept_id | dept_name | salary |
++--------+----------+---------+------------+---------+-----------+--------+
+|      1 | Ramesh   | GNoida  | 0987654321 | 56      | sales     | 60000  |
+|      2 | Suresh   | GNoida  | 0987654322 | 72      | sales     | 75000  |
+|      3 | Rajesh   | GNoida  | 0987654323 | 2324    | sales     | 28000  |
+|      4 | Shyam    | BSB     | 0987654324 | 8883    | sales     | 35000  |
+|      5 | Ramu     | BSB     | 0987654325 | 74568   | sales     | 96000  |
++--------+----------+---------+------------+---------+-----------+--------+
+5 rows in set (0.00 sec)
+
+
+lab2@lab2-OptiPlex-380:~/Desktop/AntonyS2$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 7
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use Antonydb;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> create user 'xyz' identified by 'xyz';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> grant all on Antonydb to xyz;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants;
++---------------------------------------------------------------------+
+| Grants for root@localhost                                           |
++---------------------------------------------------------------------+
+| GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION |
+| GRANT PROXY ON ''@'' TO 'root'@'localhost' WITH GRANT OPTION        |
++---------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> grant all on tbl_emp to xyz;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> quit
+Bye
+lab2@lab2-OptiPlex-380:~/Desktop/AntonyS2$ mysql -u xyz -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use Antonydb;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+
+
+mysql> select * from tbl_emp;
++--------+----------+---------+------------+---------+-----------+--------+
+| emp_id | emp_name | emp_add | emp_phone  | dept_id | dept_name | salary |
++--------+----------+---------+------------+---------+-----------+--------+
+|      1 | Ramesh   | GNoida  | 0987654321 | 56      | sales     | 60000  |
+|      2 | Suresh   | GNoida  | 0987654322 | 72      | sales     | 75000  |
+|      3 | Rajesh   | GNoida  | 0987654323 | 2324    | sales     | 28000  |
+|      4 | Shyam    | BSB     | 0987654324 | 8883    | sales     | 35000  |
+|      5 | Ramu     | BSB     | 0987654325 | 74568   | sales     | 96000  |
++--------+----------+---------+------------+---------+-----------+--------+
+5 rows in set (0.00 sec)
+
+
+mysql> update tbl_emp set emp_name='dhamu' where emp_id=1;
+Query OK, 1 row affected (0.17 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from tbl_emp;
++--------+----------+---------+------------+---------+-----------+--------+
+| emp_id | emp_name | emp_add | emp_phone  | dept_id | dept_name | salary |
++--------+----------+---------+------------+---------+-----------+--------+
+|      1 | dhamu    | GNoida  | 0987654321 | 56      | sales     | 60000  |
+|      2 | Suresh   | GNoida  | 0987654322 | 72      | sales     | 75000  |
+|      3 | Rajesh   | GNoida  | 0987654323 | 2324    | sales     | 28000  |
+|      4 | Shyam    | BSB     | 0987654324 | 8883    | sales     | 35000  |
+|      5 | Ramu     | BSB     | 0987654325 | 74568   | sales     | 96000  |
++--------+----------+---------+------------+---------+-----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> quit
+Bye
+
+
+lab2@lab2-OptiPlex-380:~/Desktop/AntonyS2$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use Antonydb;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> revoke all on tbl_emp from xyz;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> quit
+Bye
+
+
+lab2@lab2-OptiPlex-380:~/Desktop/AntonyS2$ mysql -u xyz -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 5.7.33-0ubuntu0.16.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use Antonydb;
+ERROR 1044 (42000): Access denied for user 'xyz'@'%' to database 'Antonydb'
+mysql> 
+

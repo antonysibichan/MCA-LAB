@@ -1,0 +1,128 @@
+mysql> create table employee(employee_id int(10),name varchar(50),gender varchar(10),department varchar(50),education varchar(50),MOJ varchar(50),salary int(10));
+Query OK, 0 rows affected (0.21 sec)
+
+mysql> insert into employee values(1001,'Ajay','M','Engineering','Doctoral','january',25);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into employee values(1002,'Babloo','M','Engineering','UG','february',23);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into employee values(1003,'Chhavi','F','HR','PG','march',15);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into employee values(1004,'Dheeraj','M','HR','UG','january',12);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into employee values(1005,'Evina','F','Marketing','UG','march',16);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into employee values(1006,'Fredy','M','Sales','UG','December',10);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into employee values(1007,'Garima','F','Sales','PG','March',10);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select department,SUM(Salary) from employee group by department; 
++-------------+-------------+
+| department  | SUM(Salary) |
++-------------+-------------+
+| Engineering |          48 |
+| HR          |          27 |
+| Marketing   |          16 |
+| Sales       |          20 |
++-------------+-------------+
+4 rows in set (0.07 sec)
+
+mysql> select department,sum(salary) from employee group by department having sum(salary)>=20;
++-------------+-------------+
+| department  | sum(salary) |
++-------------+-------------+
+| Engineering |          48 |
+| HR          |          27 |
+| Sales       |          20 |
++-------------+-------------+
+3 rows in set (0.01 sec)
+
+mysql> select distinct department from employee;
++-------------+
+| department  |
++-------------+
+| Engineering |
+| HR          |
+| Marketing   |
+| Sales       |
++-------------+
+4 rows in set (0.00 sec)
+
+mysql> select count(salary) from employee;
++---------------+
+| count(salary) |
++---------------+
+|             7 |
++---------------+
+1 row in set (0.02 sec)
+
+mysql> select * from employee where department='engineering' and education='Doctorial';
+Empty set (0.06 sec)
+
+mysql> select * from employee where department='engineering' and education='Doctoral';
++-------------+------+--------+-------------+-----------+---------+--------+
+| employee_id | name | gender | department  | education | MOJ     | salary |
++-------------+------+--------+-------------+-----------+---------+--------+
+|        1001 | Ajay | M      | Engineering | Doctoral  | january |     25 |
++-------------+------+--------+-------------+-----------+---------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from employee where department='engineering' or education='Doctoral';
++-------------+--------+--------+-------------+-----------+----------+--------+
+| employee_id | name   | gender | department  | education | MOJ      | salary |
++-------------+--------+--------+-------------+-----------+----------+--------+
+|        1001 | Ajay   | M      | Engineering | Doctoral  | january  |     25 |
+|        1002 | Babloo | M      | Engineering | UG        | february |     23 |
++-------------+--------+--------+-------------+-----------+----------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select name as first_name,education as qualification from employee;
++------------+---------------+
+| first_name | qualification |
++------------+---------------+
+| Ajay       | Doctoral      |
+| Babloo     | UG            |
+| Chhavi     | PG            |
+| Dheeraj    | UG            |
+| Evina      | UG            |
+| Fredy      | UG            |
+| Garima     | PG            |
++------------+---------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from employee where name like 'A%';
++-------------+------+--------+-------------+-----------+---------+--------+
+| employee_id | name | gender | department  | education | MOJ     | salary |
++-------------+------+--------+-------------+-----------+---------+--------+
+|        1001 | Ajay | M      | Engineering | Doctoral  | january |     25 |
++-------------+------+--------+-------------+-----------+---------+--------+
+1 row in set (0.00 sec)
+
+
+mysql> select department,sum(salary) from employee where education <> '
+UG' group by department having sum(salary)>=20;
++-------------+-------------+
+| department  | sum(salary) |
++-------------+-------------+
+| Engineering |          25 |
++-------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> select department,sum(salary) from employee group by department
+having sum(salary)>=15 order by sum(salary)desc;
++-------------+-------------+
+| department  | sum(salary) |
++-------------+-------------+
+| Engineering |          48 |
+| HR          |          27 |
+| Sales       |          20 |
+| Marketing   |          16 |
++-------------+-------------+
+4 rows in set (0.00 sec)
+

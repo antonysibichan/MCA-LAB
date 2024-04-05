@@ -1,0 +1,81 @@
+mysql> use Antony_db;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> CREATE TABLE students(
+    ->   id int NOT NULL AUTO_INCREMENT,
+    ->   name varchar(45) NOT NULL,
+    ->   class int NOT NULL,
+    ->   email_id varchar(65) NOT NULL,
+    ->   PRIMARY KEY (id)
+    ->   );
+Query OK, 0 rows affected (1.00 sec)
+
+mysql> INSERT INTO students(name, class, email_id)
+    -> VALUES ('Stephen', 6, 'stephen@gmail.com'),
+    -> ('Bob', 7, 'bob@gmail.com'),
+    -> ('Steven', 8, 'steven@ gmail.com'),
+    -> ('Alexandar', 7, 'alexandar@ gmail.com');
+Query OK, 4 rows affected (0.11 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE student_log (
+    -> user VARCHAR(45) NOT NULL,
+    -> descriptions VARCHAR(65) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.31 sec)
+
+mysql> select * from students;
++----+-----------+-------+----------------------+
+| id | name      | class | email_id             |
++----+-----------+-------+----------------------+
+|  1 | Stephen   |     6 | stephen@gmail.com    |
+|  2 | Bob       |     7 | bob@gmail.com        |
+|  3 | Steven    |     8 | steven@ gmail.com    |
+|  4 | Alexandar |     7 | alexandar@ gmail.com |
++----+-----------+-------+----------------------+
+4 rows in set (0.02 sec)
+
+mysql> DELIMITER //
+mysql> CREATE TRIGGER after_update_stdnts
+    -> AFTER UPDATE
+    -> ON students
+    -> FOR EACH ROW
+    -> BEGIN
+    -> INSERT INTO student_log VALUES (user(),
+    -> CONCAT('Update Student Record ', OLD.name, ' Previous Class :',
+    -> OLD.class, ' Present Class ', NEW.class));
+    -> END //
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> delimiter ;
+mysql> select * from student_log;
+Empty set (0.00 sec)
+
+mysql> update students set class=class+1;
+Query OK, 4 rows affected (0.81 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> select * from student_log;
++----------------+-------------------------------------------------------------------+
+| user           | descriptions                                                      |
++----------------+-------------------------------------------------------------------+
+| root@localhost | Update Student Record Stephen Previous Class :6 Present Class 7   |
+| root@localhost | Update Student Record Bob Previous Class :7 Present Class 8       |
+| root@localhost | Update Student Record Steven Previous Class :8 Present Class 9    |
+| root@localhost | Update Student Record Alexandar Previous Class :7 Present Class 8 |
++----------------+-------------------------------------------------------------------+
+4 rows in set (0.00 sec)
+
+mysql>  select * from students;
++----+-----------+-------+----------------------+
+| id | name      | class | email_id             |
++----+-----------+-------+----------------------+
+|  1 | Stephen   |     7 | stephen@gmail.com    |
+|  2 | Bob       |     8 | bob@gmail.com        |
+|  3 | Steven    |     9 | steven@ gmail.com    |
+|  4 | Alexandar |     8 | alexandar@ gmail.com |
++----+-----------+-------+----------------------+
+4 rows in set (0.00 sec)
+

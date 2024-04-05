@@ -1,0 +1,30 @@
+mysql> use Antony_db
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> use Antony_db;
+Database changed
+mysql> delimiter //
+mysql> create procedure display()
+    -> begin
+    -> select * from student;
+    -> end
+    -> //
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> delimiter ;
+mysql> call display();
++--------+------+--------+
+| rollno | name | course |
++--------+------+--------+
+|      1 | Ammu | MCA    |
+|      2 | Amal | MCA    |
+|      3 | Anju | MCA    |
+|      4 | Anet | MCA    |
+|      6 | Anto | MCA    |
++--------+------+--------+
+5 rows in set (0.04 sec)
+
+Query OK, 0 rows affected (0.04 sec)
+
